@@ -1,0 +1,34 @@
+{
+  "name": "mishkx/laravel-httpclient",
+  "type": "library",
+  "description": "Http Client",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mikhail Pichushkin",
+      "email": "pi4ushkin@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.3",
+    "illuminate/filesystem": "^5.8",
+    "illuminate/support": "^5.8"
+  },
+  "autoload": {
+      "psr-4": {
+          "Mishkx\\HttpClient\\": "src/"
+      }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Mishkx\\HttpClient\\HttpClientServiceProvider"
+      ],
+      "aliases": {
+         "HttpClient": "Mishkx\\HttpClient\\HttpClientFacade"
+      }
+    }
+  }
+}
