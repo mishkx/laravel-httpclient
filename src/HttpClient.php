@@ -206,7 +206,10 @@ class HttpClient implements HttpClientInterface
                 RequestOptions::HEADERS => $headers,
                 RequestOptions::COOKIES => $this->getCookiesJar(),
                 RequestOptions::ON_STATS => function (GuzzleHttp\TransferStats $stats) {
-                    $this->setReferer($stats->getEffectiveUri());
+                    $uri = $stats->getEffectiveUri();
+                    $query = $uri->getQuery() ? '?' . $uri->getQuery() : '';
+                    $referer = "{$uri->getScheme()}://{$uri->getHost()}{$uri->getPath()}{$query}";
+                    $this->setReferer($referer);
                 },
                 RequestOptions::HTTP_ERRORS => false,
                 RequestOptions::VERIFY => false,
