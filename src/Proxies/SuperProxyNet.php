@@ -1,8 +1,9 @@
 <?php
 
-namespace Mishkx\HttpClient\Proxy;
+namespace Mishkx\HttpClient\Proxies;
 
-use HttpClient;
+use Illuminate\Support\Facades\Config;
+use Mishkx\HttpClient\Facades\HttpClient;
 
 class SuperProxyNet extends ProxyBaseClass
 {
@@ -18,14 +19,16 @@ class SuperProxyNet extends ProxyBaseClass
 
         preg_match_all("/({$digitRegExp}\.){3}({$digitRegExp})/", $content, $matches);
 
+        $credentials = Config::get('http-client.proxy_credentials.super_proxy');
+
         return collect($matches[0])
-            ->map(function ($ip) {
+            ->map(function ($ip) use ($credentials) {
                 return [
                     'ip' => $ip,
-                    'port' => config('api.super_proxy.port'),
-                    'type' => config('api.super_proxy.type'),
-                    'user' => config('api.super_proxy.login'),
-                    'pass' => config('api.super_proxy.password'),
+                    'port' => $credentials['port'],
+                    'type' => $credentials['type'],
+                    'user' => $credentials['login'],
+                    'pass' => $credentials['password'],
                     'active' => true,
                 ];
             });

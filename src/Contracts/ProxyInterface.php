@@ -1,6 +1,6 @@
 <?php
 
-namespace Mishkx\HttpClient\Contracts;
+namespace Mishkx\HttpClient\Interfaces;
 
 interface ProxyInterface
 {

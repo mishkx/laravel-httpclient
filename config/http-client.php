@@ -1,21 +1,29 @@
 <?php
 
 return [
-    'default-user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
+    'default_user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
 
-    'is-repeat-on-error' => false,
+    'is_repeat_on_error' => false,
 
-    'max-attempts' => 5,
+    'max_attempts' => 5,
 
-    'proxy-class' => \Mishkx\HttpClient\Proxy\Proxy6Net::class,
+    'proxy_cache_time' => 60,
+
+    'proxy_class' => \Mishkx\HttpClient\Proxies\Proxy6Net::class,
+
+    'proxy_credentials' => [
+        'proxy6' => env('PROXY6_API_KEY'),
+        'super_proxy' => [
+            'login' => env('SUPER_PROXY_LOGIN'),
+            'password' => env('SUPER_PROXY_PASSWORD'),
+            'type' => env('SUPER_PROXY_TYPE', 'http'),
+            'port' => env('SUPER_PROXY_PORT', '7165'),
+        ]
+    ],
 
     'sleep' => 0.1,
 
-    'sleep-range' => 0.2,
+    'sleep_range' => 0.2,
 
-    'use-proxy' => false,
-
-    'proxy-credentials' => [
-        'proxy6' => env('PROXY6_API_KEY'),
-    ],
+    'use_proxy' => false,
 ];

@@ -2,8 +2,10 @@
 
 namespace Mishkx\HttpClient;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use Mishkx\HttpClient\Contracts\ProxyInterface;
+use Mishkx\HttpClient\Interfaces\HttpClientInterface;
+use Mishkx\HttpClient\Interfaces\ProxyInterface;
 
 class HttpClientServiceProvider extends ServiceProvider
 {
@@ -13,10 +15,10 @@ class HttpClientServiceProvider extends ServiceProvider
             __DIR__ . '/../config/http-client.php', 'http-client'
         );
 
-        $this->app->bind(ProxyInterface::class, $this->app['config']->get('http-client.' . HttpClientOptions::PROXY_CLASS));
+        $this->app->bind(ProxyInterface::class, Config::get('http-client.' . HttpClientOptions::PROXY_CLASS));
 
-        $this->app->bind(HttpClient::class, function ($app) {
-            return new HttpClient($app['config']->get('http-client'));
+        $this->app->bind(HttpClientInterface::class, function ($app) {
+            return new HttpClient(Config::get('http-client'));
         });
     }
 }

@@ -2,35 +2,35 @@
 
 namespace Mishkx\HttpClient;
 
-use Illuminate\Support\Collection;
-use Mishkx\HttpClient\Contracts\ProxyInterface;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\ConnectException;
-use Exception;
+use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Collection;
+use Mishkx\HttpClient\Interfaces\ProxyInterface;
 
 class HttpClientProxy
 {
     public const TIMEOUT = 2;
 
-    protected $client;
+    protected $proxyClient;
 
     public function __construct($client = null)
     {
-        $this->client = $client ?: resolve(ProxyInterface::class);
+        $this->proxyClient = $client ?: resolve(ProxyInterface::class);
     }
 
     public function getAvailable($url)
     {
-        return (new Collection($this->client->getList()))
+        return (new Collection($this->proxyClient->getList()))
             ->shuffle()
             ->first(function ($proxy) use ($url) {
                 return self::isAvailable($url, $proxy);
             });
     }
 
-    public static function isAvailable($url, $proxy)
+    private static function isAvailable($url, $proxy)
     {
         try {
             $client = new Client();

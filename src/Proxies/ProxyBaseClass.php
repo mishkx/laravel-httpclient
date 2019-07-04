@@ -1,28 +1,32 @@
 <?php
 
-namespace Mishkx\HttpClient\Proxy;
+namespace Mishkx\HttpClient\Proxies;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Mishkx\HttpClient\Contracts\ProxyInterface;
+use Illuminate\Support\Facades\Config;
+use Mishkx\HttpClient\Interfaces\ProxyInterface;
 
 abstract class ProxyBaseClass implements ProxyInterface
 {
-    protected const CACHE_MINUTES = 60;
+    protected $client;
 
     protected const PROTOCOL_REPLACES = [
         'socks' => 'socks5',
     ];
 
-    protected $client;
-
     abstract protected function getProxiesList();
 
     public function getList()
     {
-        $list = Cache::remember(get_called_class() . '::list', now()->addMinutes(self::CACHE_MINUTES), function () {
-            return collect($this->getProxiesList())->shuffle()->toArray();
-        });
+        $list = Cache::remember(
+            get_called_class() . '::list',
+            Carbon::now()->addMinutes(Config::get('http-client.proxy_cache_time')),
+            function () {
+                return collect($this->getProxiesList())->shuffle()->toArray();
+            }
+        );
 
         $formatted = collect($list)
             ->filter(function ($item) {

@@ -2,7 +2,7 @@
   "name": "mishkx/laravel-httpclient",
   "type": "library",
   "description": "Http Client",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
     {
@@ -27,7 +27,7 @@
         "Mishkx\\HttpClient\\HttpClientServiceProvider"
       ],
       "aliases": {
-         "HttpClient": "Mishkx\\HttpClient\\HttpClientFacade"
+         "HttpClient": "Mishkx\\HttpClient\\Facades\\HttpClient"
       }
     }
   }

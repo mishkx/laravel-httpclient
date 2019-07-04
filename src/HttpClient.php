@@ -9,8 +9,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
+use Mishkx\HttpClient\Interfaces\HttpClientInterface;
 
-class HttpClient
+class HttpClient implements HttpClientInterface
 {
     protected $clientConfig = [];
     protected $cookiesJar = [];
@@ -73,6 +74,7 @@ class HttpClient
             HttpClientOptions::COOKIES_PATH,
             HttpClientOptions::DEFAULT_HEADERS,
             HttpClientOptions::DEFAULT_USER_AGENT,
+            HttpClientOptions::IS_REPEAT_ON_ERROR,
             HttpClientOptions::MAX_ATTEMPTS,
             HttpClientOptions::PROXY_ADDRESS,
             HttpClientOptions::SLEEP,
