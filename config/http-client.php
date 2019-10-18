@@ -9,7 +9,7 @@ return [
 
     'proxy_cache_time' => 60,
 
-    'proxy_class' => \Mishkx\HttpClient\Proxies\Proxy6Net::class,
+    'proxy_class' => \Mishkx\HttpClient\Proxies\ProxyMarket::class,
 
     'proxy_credentials' => [
         'proxy6' => env('PROXY6_API_KEY'),
