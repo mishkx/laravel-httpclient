@@ -29,7 +29,7 @@ class ProxyMarket extends ProxyBaseClass
                 return [
                     'ip' => $item['ip'],
                     'port' => $item['http_port'],
-                    'type' => 'https',
+                    'type' => 'http',
                     'user' => $item['login'],
                     'pass' => $item['password'],
                     'active' => $item['active'],
