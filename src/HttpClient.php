@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Mishkx\HttpClient\Interfaces\HttpClientInterface;
+use Mishkx\HttpClient\Interfaces\ProxyInterface;
 
 class HttpClient implements HttpClientInterface
 {
@@ -47,13 +48,29 @@ class HttpClient implements HttpClientInterface
         return null;
     }
 
+    /**
+     * @return ProxyInterface|null
+     */
+    public function getProxyClient()
+    {
+        $class = $this->getClientConfigValue(HttpClientOptions::PROXY_CLASS);
+        if (!$class) {
+            return null;
+        }
+        $instance = new $class;
+        return $instance instanceof ProxyInterface ? $instance : null;
+    }
+
     public function getProxyAddress($url)
     {
         if (!$this->getClientConfigValue(HttpClientOptions::USE_PROXY)) {
             return null;
         }
         if (!$this->getClientConfigValue(HttpClientOptions::PROXY_ADDRESS)) {
-            $this->setProxyAddress((new HttpClientProxy())->getAvailable($url));
+            $proxyClient = $this->getProxyClient();
+            if ($proxyClient) {
+                $this->setProxyAddress((new HttpClientProxy($proxyClient))->getAvailable($url));
+            }
         }
         return $this->getClientConfigValue(HttpClientOptions::PROXY_ADDRESS);
     }
@@ -77,6 +94,7 @@ class HttpClient implements HttpClientInterface
             HttpClientOptions::IS_REPEAT_ON_ERROR,
             HttpClientOptions::MAX_ATTEMPTS,
             HttpClientOptions::PROXY_ADDRESS,
+            HttpClientOptions::PROXY_CLASS,
             HttpClientOptions::SLEEP,
             HttpClientOptions::SLEEP_RANGE,
             HttpClientOptions::USE_PROXY,
