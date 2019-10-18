@@ -13,12 +13,13 @@ return [
 
     'proxy_credentials' => [
         'proxy6' => env('PROXY6_API_KEY'),
+        'proxy_market' => env('PROXY_MARKET_API_KEY'),
         'super_proxy' => [
             'login' => env('SUPER_PROXY_LOGIN'),
             'password' => env('SUPER_PROXY_PASSWORD'),
             'type' => env('SUPER_PROXY_TYPE', 'http'),
             'port' => env('SUPER_PROXY_PORT', '7165'),
-        ]
+        ],
     ],
 
     'sleep' => 0.1,
