@@ -14,6 +14,10 @@ return [
     'proxy_credentials' => [
         'proxy6' => env('PROXY6_API_KEY'),
         'proxy_market' => env('PROXY_MARKET_API_KEY'),
+        'proxy_seller' => [
+            'login' => env('PROXY_SELLER_LOGIN'),
+            'password' => env('PROXY_SELLER_PASSWORD'),
+        ],
         'super_proxy' => [
             'login' => env('SUPER_PROXY_LOGIN'),
             'password' => env('SUPER_PROXY_PASSWORD'),
