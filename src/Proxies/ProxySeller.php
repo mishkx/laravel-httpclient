@@ -35,8 +35,8 @@ class ProxySeller extends ProxyBaseClass
         $csrfToken = $crawler->filter('[name="csrf-token"]')->first()->attr('content');
         $this->client()->post(self::AUTH_URL, [
             '_csrf-frontend' => $csrfToken,
-            'LoginForm[username]' => Config::get('http-client.proxy_seller.login'),
-            'LoginForm[password]' => Config::get('http-client.proxy_seller.password'),
+            'LoginForm[username]' => Config::get('http-client.proxy_credentials.proxy_seller.login'),
+            'LoginForm[password]' => Config::get('http-client.proxy_credentials.proxy_seller.password'),
         ]);
     }
 
