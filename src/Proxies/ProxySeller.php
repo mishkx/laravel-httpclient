@@ -81,7 +81,7 @@ class ProxySeller extends ProxyBaseClass
                 return [
                     'ip' => $item['host'],
                     'port' => $item['port'],
-                    'type' => 'https',
+                    'type' => 'http',
                     'user' => $item['user'],
                     'pass' => $item['pass'],
                     'active' => true,
