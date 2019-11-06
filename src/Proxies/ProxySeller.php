@@ -18,6 +18,8 @@ class ProxySeller extends ProxyBaseClass
 
     private const CONTROL_PANEL_ITEM_SELECTOR = '.personal_account_ipv4_table [data-order_type="ipv4"][data-id]';
 
+    private const PROTOCOL = 'http';
+
     protected $cacheKey = 'ProxySellerRuProxiesList';
 
     private function client()
@@ -76,12 +78,12 @@ class ProxySeller extends ProxyBaseClass
 
         return collect($matches[1])
             ->map(function ($item) {
-                $item = preg_replace('/^(https\:\/\/)?/', 'https://', $item);
+                $item = preg_replace('/^(https?:\/\/)?/', self::PROTOCOL . '://', $item);
                 $item = parse_url($item);
                 return [
                     'ip' => $item['host'],
                     'port' => $item['port'],
-                    'type' => 'http',
+                    'type' => self::PROTOCOL,
                     'user' => $item['user'],
                     'pass' => $item['pass'],
                     'active' => true,
